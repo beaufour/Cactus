@@ -53,6 +53,10 @@ class StaticHandler(tornado.web.StaticFileHandler):
         return False
 
     def get_content_type(self):
+        # beaufour: total hack to support my paths without ending /
+        if self.absolute_path is None or self.path.find('.') == -1:
+            return "text/html"
+
         return mime.guess(self.absolute_path)
 
     def write_error(self, status_code, **kwargs):
