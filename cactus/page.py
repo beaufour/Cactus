@@ -32,7 +32,9 @@ class Page(PageCompatibilityLayer, ResourceURLHelperMixin):
                 if self.is_index():
                     self.final_url = self.link_url.rsplit('index.html', 1)[0]
                 else:
-                    self.final_url = '{0}/'.format(self.link_url.rsplit('.html', 1)[0])
+                    # beaufour: hack to support my paths without /
+                    # self.final_url = '{0}/'.format(self.link_url.rsplit('.html', 1)[0])
+                    self.final_url = '{0}'.format(self.link_url.rsplit('.html', 1)[0])
             else:
                 self.final_url = self.link_url
 
@@ -40,7 +42,9 @@ class Page(PageCompatibilityLayer, ResourceURLHelperMixin):
             if not self.is_html() or self.source_path.endswith('index.html'):
                 self.build_path = self.source_path
             else:
-                self.build_path = '{0}/{1}'.format(self.source_path.rsplit('.html', 1)[0], 'index.html')
+                # beaufour: hack to support my paths without /
+                # self.build_path = '{0}/{1}'.format(self.source_path.rsplit('.html', 1)[0], 'index.html')
+                self.build_path = '{0}'.format(self.source_path.rsplit('.html', 1)[0])
         else:
             self.final_url = self.link_url
             self.build_path = self.source_path

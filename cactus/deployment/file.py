@@ -96,7 +96,12 @@ class BaseFile(object):
         """
         Return the content type for this object
         """
-        content_type = mime.guess(self.path)
+
+        # beaufour: total hack to support my paths without ending /
+        if self.path is None or self.path.find('.') == -1:
+            content_type = "text/html"
+        else:
+            content_type = mime.guess(self.path)
 
         if not content_type:
             return None
